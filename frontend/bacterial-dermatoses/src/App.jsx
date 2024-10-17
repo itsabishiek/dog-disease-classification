@@ -12,27 +12,38 @@ function App() {
 
   const imageRef = useRef(null);
 
-  const sendFile = async () => {
-    if (image) {
-      setIsloading(true);
-
-      let formData = new FormData();
-      formData.append("file", selectedFile);
-      let res = await axios({
-        method: "post",
-        url: "https://dog-disease-classification.onrender.com/predict",
-        data: formData,
-      });
-      setData(res.data);
-      setIsloading(false);
-    }
-  };
-
   const clearData = () => {
     setData(null);
     setImage(false);
     setSelectedFile(null);
     setPreview(null);
+  };
+
+  const sendFile = async () => {
+    try {
+      if (image) {
+        setIsloading(true);
+
+        let formData = new FormData();
+        formData.append("file", selectedFile);
+        let res = await axios({
+          method: "post",
+          url: "https://dog-disease-classification.onrender.com/predict",
+          data: formData,
+        });
+        setData(res.data);
+      }
+    } catch (error) {
+      if (error?.response) {
+        alert(error?.response?.data?.detail);
+        clearData();
+      } else {
+        alert("An error occurred. Please try again.");
+        clearData();
+      }
+    } finally {
+      setIsloading(false);
+    }
   };
 
   useEffect(() => {

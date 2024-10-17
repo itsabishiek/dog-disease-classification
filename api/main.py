@@ -38,7 +38,7 @@ def read_file_as_image(data) -> np.ndarray:
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     # Limit the file size to avoid excessive memory usage
-    MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB limit
+    MAX_FILE_SIZE = 2 * 1024 * 1024  # 5 MB limit
     file_data = await file.read()
     if len(file_data) > MAX_FILE_SIZE:
         raise HTTPException(status_code=400, detail="File size should be less than 5 MB")
