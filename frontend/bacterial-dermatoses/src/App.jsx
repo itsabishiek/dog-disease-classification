@@ -11,6 +11,7 @@ function App() {
   const [isLoading, setIsloading] = useState(false);
 
   const imageRef = useRef(null);
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB limit
 
   const clearData = () => {
     setData(null);
@@ -56,14 +57,21 @@ function App() {
   }, [selectedFile]);
 
   const onSelectFile = (e) => {
-    if (e.target?.files?.[0]) {
-      setSelectedFile(e.target.files[0]);
+    const file = e.target?.files?.[0];
+    if (file) {
+      // Check file size
+      if (file.size > MAX_FILE_SIZE) {
+        alert(
+          "File size should be less than 2 MB. Please select a smaller file."
+        );
+        clearData(); // Clear the selected file if it exceeds the limit
+        return;
+      }
+      setSelectedFile(file);
       setData(undefined);
       setImage(true);
     }
   };
-
-  console.log("data", data);
 
   return (
     <div className="main">
@@ -121,6 +129,8 @@ function App() {
               <b style={{ color: "#0091ff" }}>
                 {data.confidence.toFixed(4) * 100}%
               </b>
+              {" of "}
+              <b>{data.class}</b>
             </span>
           )}
         </div>
