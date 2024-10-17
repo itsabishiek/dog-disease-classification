@@ -12,6 +12,8 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:5173",
+    "https://bacterial-dermatoses.vercel.app",
+    "https://parasitic-dermatoses.vercel.app"
 ]
 app.add_middleware(
     CORSMiddleware,
