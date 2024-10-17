@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div className="main">
-      <h1>Dog Disease Classification</h1>
+      <h1>Bacterial Dermatoses</h1>
       <div className="mainUpload" onClick={() => imageRef.current.click()}>
         {!image && (
           <>
@@ -83,16 +83,32 @@ function App() {
 
       {data && (
         <div>
-          <span>
-            Class: <b style={{ color: "orange" }}>{data.class}</b>
-          </span>
+          {data.class === "Pyoderma" ? (
+            <span>
+              Class: <b style={{ color: "orange" }}>{data.class}</b>
+            </span>
+          ) : (
+            <span>
+              {/* Class:{" "} */}
+              <b>Not comes under bacterial dermatoses</b>
+            </span>
+          )}
           <br />
-          <span>
-            Confidence:{" "}
-            <b style={{ color: "#0091ff" }}>
-              {data.confidence.toFixed(4) * 100}%
-            </b>
-          </span>
+          {data.class === "Pyoderma" ? (
+            <span>
+              Level of:{" "}
+              <b style={{ color: "#0091ff" }}>
+                {data.confidence.toFixed(4) * 100}%
+              </b>
+            </span>
+          ) : (
+            <span>
+              Confidence Level:{" "}
+              <b style={{ color: "#0091ff" }}>
+                {data.confidence.toFixed(4) * 100}%
+              </b>
+            </span>
+          )}
         </div>
       )}
 
