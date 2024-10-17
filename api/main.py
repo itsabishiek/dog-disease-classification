@@ -11,6 +11,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:5173",
+    "https://dog-disease-classification.onrender.com"
 ]
 app.add_middleware(
     CORSMiddleware,

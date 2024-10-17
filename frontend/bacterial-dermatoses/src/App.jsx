@@ -14,11 +14,13 @@ function App() {
 
   const sendFile = async () => {
     if (image) {
+      setIsloading(true);
+
       let formData = new FormData();
       formData.append("file", selectedFile);
       let res = await axios({
         method: "post",
-        url: "http://localhost:8000/predict",
+        url: "https://dog-disease-classification.onrender.com/predict",
         data: formData,
       });
       setData(res.data);
@@ -89,8 +91,9 @@ function App() {
             </span>
           ) : (
             <span>
-              {/* Class:{" "} */}
-              <b>Not comes under bacterial dermatoses</b>
+              Class: <b style={{ color: "orange" }}>Negative</b>
+              <br />
+              <p>(Not comes under bacterial dermatoses)</p>
             </span>
           )}
           <br />
@@ -113,7 +116,7 @@ function App() {
       )}
 
       <div className="mainAction">
-        <button onClick={sendFile}>
+        <button onClick={sendFile} style={{ width: "80px" }}>
           {" "}
           {isLoading ? <Loader size={15} /> : "SUBMIT"}
         </button>
